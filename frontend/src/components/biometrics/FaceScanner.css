@@ -1,0 +1,225 @@
+/* ───────────────────────────────────────
+   FaceScanner – Modern Clean Design
+   ─────────────────────────────────────── */
+
+.face-scanner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Video Container */
+.face-scanner__video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-gray-900);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Video */
+.face-scanner__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Canvas Overlay */
+.face-scanner__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Status Overlay */
+.face-scanner__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Message — above the video */
+.face-scanner__message {
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+  animation: messageSlide 0.3s ease-out;
+  letter-spacing: 0.01em;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.face-scanner__message[data-status='initializing'],
+.face-scanner__message[data-status='ready'] {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.face-scanner__message[data-status='scanning'] {
+  background-color: var(--color-warning);
+  color: white;
+}
+
+.face-scanner__message[data-status='success'] {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.face-scanner__message[data-status='error'] {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+/* Progress Bar */
+.face-scanner__progress {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.face-scanner__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease-out;
+}
+
+/* Loading Spinner */
+.face-scanner__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* Controls */
+.face-scanner__controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Button */
+.face-scanner__button {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-width: 140px;
+  letter-spacing: 0.01em;
+}
+
+.face-scanner__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.face-scanner__button--primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.face-scanner__button--primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.face-scanner__button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.face-scanner__button--secondary {
+  background-color: var(--color-gray-500);
+  color: white;
+}
+
+.face-scanner__button--secondary:hover:not(:disabled) {
+  background-color: var(--color-gray-600);
+}
+
+/* Status-based styling */
+.face-scanner[data-status='error'] .face-scanner__video-container {
+  box-shadow: inset 0 0 0 2px var(--color-danger);
+  animation: shake 0.4s ease-in-out;
+}
+
+.face-scanner[data-status='success'] .face-scanner__video-container {
+  box-shadow: inset 0 0 0 2px var(--color-success);
+  animation: pulse 0.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .face-scanner__message {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .face-scanner__button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .face-scanner__controls {
+    flex-direction: column;
+  }
+
+  .face-scanner__video-container {
+    border-radius: var(--radius-md);
+  }
+}

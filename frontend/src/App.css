@@ -1,0 +1,18 @@
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Smooth page transitions */
+#root > * {
+  animation: pageEnter 0.3s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
